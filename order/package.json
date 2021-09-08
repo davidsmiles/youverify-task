@@ -1,0 +1,22 @@
+{
+  "name": "order",
+  "version": "1.0.0",
+  "description": "Order Service",
+  "main": "app",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "order"
+  ],
+  "author": "Ugbero David <ugberodavid@gmail.com>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
