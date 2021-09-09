@@ -8,7 +8,7 @@ services:
       - mongo
     environment: 
       - PORT=5000
-      - DATABASE_URI=mongodb://mongo:27017/youverify-task
+      - DATABASE_URI=mongodb://mongo:27017/customer-service
   
   product-service:
     build: ./product
@@ -18,7 +18,7 @@ services:
       - mongo
     environment: 
       - PORT=5000
-      - DATABASE_URI=mongodb://mongo:27017/youverify-task
+      - DATABASE_URI=mongodb://mongo:27017/product-service
 
   order-service:
     build: ./order
@@ -28,7 +28,7 @@ services:
       - mongo
     environment: 
       - PORT=5000
-      - DATABASE_URI=mongodb://mongo:27017/youverify-task
+      - DATABASE_URI=mongodb://mongo:27017/order-service
   
     payment-service:
       build: ./payment
@@ -38,7 +38,7 @@ services:
         - mongo
       environment: 
         - PORT=5000
-        - DATABASE_URI=mongodb://mongo:27017/youverify-task
+        - DATABASE_URI=mongodb://mongo:27017/payment-service
     
   mongo:
     container_name: mongo
