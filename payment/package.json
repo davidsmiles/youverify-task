@@ -1,14 +1,14 @@
 {
-  "name": "order",
+  "name": "payment",
   "version": "1.0.0",
-  "description": "Order Service",
+  "description": "Payment Service",
   "main": "app",
   "scripts": {
     "start": "node app",
     "dev": "nodemon app"
   },
   "keywords": [
-    "order"
+    "payment"
   ],
   "author": "Ugbero David <ugberodavid@gmail.com>",
   "license": "UNLICENSED",
