@@ -1,13 +1,54 @@
 version: "3.2"
 services:
+  customer-service:
+    build: ./customer
+    ports: 
+      - '5000:5000'
+    links: 
+      - mongo
+    environment: 
+      - PORT=5000
+      - DATABASE_URI=mongodb://mongo:27017/youverify-task
+  
+  product-service:
+    build: ./product
+    ports: 
+      - '5001:5000'
+    links: 
+      - mongo
+    environment: 
+      - PORT=5000
+      - DATABASE_URI=mongodb://mongo:27017/youverify-task
+
+  order-service:
+    build: ./order
+    ports: 
+      - '5002:5000'
+    links: 
+      - mongo
+    environment: 
+      - PORT=5000
+      - DATABASE_URI=mongodb://mongo:27017/youverify-task
+  
+    payment-service:
+      build: ./payment
+      ports: 
+        - '5003:5000'
+      links: 
+        - mongo
+      environment: 
+        - PORT=5000
+        - DATABASE_URI=mongodb://mongo:27017/youverify-task
+    
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports: 
+      - '27017:27017'
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'
     ports:
         - 5672:5672
         - 15672:15672
-    networks:
-        - rabbitmq_nodejs
-networks:
-  rabbitmq_nodejs:
-    driver: bridge
