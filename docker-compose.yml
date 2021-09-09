@@ -4,6 +4,8 @@ services:
     build: ./customer
     ports: 
       - '8080:5000'
+    volumes:
+      - "./customer:/app"
     links: 
       - mongo
     environment: 
@@ -16,6 +18,8 @@ services:
       - '8081:5000'
     links: 
       - mongo
+    volumes:
+      - "./product:/app"
     environment: 
       - PORT=5000
       - DATABASE_URI=mongodb://mongo:27017/product-service
@@ -27,6 +31,8 @@ services:
     links: 
       - mongo
       - rabbitmq
+    volumes:
+      - "./order:/app"
     environment: 
       - PORT=5000
       - DATABASE_URI=mongodb://mongo:27017/order-service
@@ -38,6 +44,8 @@ services:
     restart: always
     links: 
       - mongo
+    volumes:
+      - "./payment:/app"
     depends_on: 
       - rabbitmq  
     environment: 
