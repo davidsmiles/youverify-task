@@ -1,5 +1,5 @@
 const express = require('express')
-const amqp = require('amqplib/callback_api')
+const task  = require('../work_queues/send_task')  
 
 const router = express.Router()
 const Order = require('../models/Order')
@@ -16,36 +16,11 @@ router.post('/', async (req, res) => {
 
     try{
         neworder = await order.save()
+        
         payload['orderId'] = neworder._id
 
         // send data to Payment service
-
-        amqp.connect('amqp://localhost', (err, conn) => {
-            if(err){
-                throw err
-            }
-
-            conn.createChannel((err, channel) => {
-                if(err) {
-                    throw err
-                }
-
-                console.log('Connected to Rabbitmq successfully')
-
-                let queueName = 'order.event.added'
-
-                channel.assertQueue(queueName, {
-                    durable: false
-                })
-                
-                channel.sendToQueue(queueName, Buffer.from(JSON.stringify(payload)))
-                console.log(`Message: ${JSON.stringify(payload)}`)
-
-                setTimeout(() => {
-                    conn.close()
-                }, 1000)
-            })
-        })
+        task.Publish('payment.event', payload)
     
         res.json(payload)
     }
