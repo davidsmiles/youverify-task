@@ -3,7 +3,7 @@ services:
   customer-service:
     build: ./customer
     ports: 
-      - '5000:5000'
+      - '8080:5000'
     links: 
       - mongo
     environment: 
@@ -13,7 +13,7 @@ services:
   product-service:
     build: ./product
     ports: 
-      - '5001:5000'
+      - '8081:5000'
     links: 
       - mongo
     environment: 
@@ -23,22 +23,26 @@ services:
   order-service:
     build: ./order
     ports: 
-      - '5002:5000'
+      - '8082:5000'
     links: 
       - mongo
+      - rabbitmq
     environment: 
       - PORT=5000
       - DATABASE_URI=mongodb://mongo:27017/order-service
   
-    payment-service:
-      build: ./payment
-      ports: 
-        - '5003:5000'
-      links: 
-        - mongo
-      environment: 
-        - PORT=5000
-        - DATABASE_URI=mongodb://mongo:27017/payment-service
+  payment-service:
+    build: ./payment
+    ports: 
+      - '8083:5000'
+    restart: always
+    links: 
+      - mongo
+    depends_on: 
+      - rabbitmq  
+    environment: 
+      - PORT=5000
+      - DATABASE_URI=mongodb://mongo:27017/payment-service
     
   mongo:
     container_name: mongo

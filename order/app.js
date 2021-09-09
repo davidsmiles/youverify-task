@@ -19,8 +19,13 @@ const order = require('./routes/order')
 app.use('/order', order)
 
 // Connect To DB
-mongoose.connect(process.env.DATABASE_URI, () => console.log('Connected to database successfully'))
+mongoose.connect(
+    process.env.DATABASE_URI, 
+    () => console.log('Order-Service DB Connected')
+)
 
 const port = process.env.PORT || 3000
-app.listen(port, () => console.log(`Server is listening on port: ${port}`))
+app.listen(
+    port, () => console.log(`Server is listening on port: ${port}`)
+)
 

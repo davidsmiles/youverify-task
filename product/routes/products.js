@@ -20,15 +20,21 @@ router.post('/', async (req, res) => {
     /**
      * 
      */
+    const {name, description, amount } = req.body
     const product = new Product({
-        title: req.body.title,
-        description: req.body.description,
-        amount: req.body.amount
+        name,
+        description,
+        amount
     })
 
     try{
         const newproduct = await product.save()
-        res.json(newproduct)
+        res.json({
+            id: newproduct.id,
+            name,
+            description,
+            amount
+        })
     }
     catch(err){
         res.status(400).json({message: err})

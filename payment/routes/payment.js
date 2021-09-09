@@ -1,5 +1,4 @@
 const express = require('express')
-const amqp = require('amqplib/callback_api')
 
 const router = express.Router()
 const Payment = require('../models/Payment')

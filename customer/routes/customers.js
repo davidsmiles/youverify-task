@@ -20,19 +20,25 @@ router.post('/', async (req, res) => {
     /**
      * 
      */
-    const customer = new Customer({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password: req.body.password
-    })
-
-    try{
-        const newcust = await customer.save()
-        res.json(newcust)
+    const {email, password, name} = req.body
+    
+    const exists = await Customer.findOne({ email })
+    if (!exists){
+        const newcust = new Customer({
+            name,
+            email,
+            password
+        })
+        const customer = await newcust.save()
+        res.json({
+            name,
+            email,
+            id: customer.id
+        })
     }
-    catch(err){
+    else {
         res.status(400).json({message: err})
+
     }
 })
 

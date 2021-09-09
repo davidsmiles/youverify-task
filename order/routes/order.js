@@ -1,28 +1,31 @@
 const express = require('express')
-const task  = require('../work_queues/send_task')  
+const task  = require('../work_queues/send')  
 
 const router = express.Router()
 const Order = require('../models/Order')
 
 
-router.post('/', async (req, res) => {
-    var payload = {
-        customerId: req.body.customerId,
-        productId: req.body.productId,
-        amount: req.body.amount
-    }
 
-    const order = new Order(payload)
+router.post('/', async (req, res) => {
+    var { customerId, productId, amount} = req.body
+
+    const order = new Order({
+        customerId, productId, amount
+    })
 
     try{
         neworder = await order.save()
-        
-        payload['orderId'] = neworder._id
 
         // send data to Payment service
-        task.Publish('payment.service', payload)
+        data = {
+            customerId,
+            productId,
+            amount,
+            orderId: neworder.id
+        }
+        task.sendToQueue('PAYMENT', data)
     
-        res.json(payload)
+        res.json(data)
     }
     catch(err){
         res.status(400).json({message: err})

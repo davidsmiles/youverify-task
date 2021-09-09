@@ -21,8 +21,9 @@ app.use('/customers', customer)
 app.use('/customers', customers)
 
 // Connect To DB
-mongoose.connect(process.env.DATABASE_URI, 
-    () => console.log('Connected to database successfully')
+mongoose.connect(
+    process.env.DATABASE_URI, 
+    () => console.log('Customer-Service DB Connected')
 )
 
 const port = process.env.PORT || 3000
