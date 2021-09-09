@@ -32,7 +32,7 @@ amqp.connect('amqp://localhost', (err, conn) => {
 
         console.log('Connected to Rabbitmq successfully')
 
-        let queueName = 'order.event.added'
+        let queueName = 'payment.service'
 
         channel.assertQueue(queueName, {
             durable: false

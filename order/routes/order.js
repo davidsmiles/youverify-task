@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
         payload['orderId'] = neworder._id
 
         // send data to Payment service
-        task.Publish('payment.event', payload)
+        task.Publish('payment.service', payload)
     
         res.json(payload)
     }
