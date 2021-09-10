@@ -18,9 +18,10 @@ const order = require('./routes/order')
 // Initialize Routes
 app.use('/order', order)
 
-// Connect To DB
+// Establish connection to Mongo Database
+mongo_uri = process.env.DATABASE_URI | 'mongodb://127.0.0.1:27017/order-service'
 mongoose.connect(
-    process.env.DATABASE_URI, 
+    mongo_uri, 
     () => console.log('Order-Service DB Connected')
 )
 

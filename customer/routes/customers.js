@@ -5,7 +5,8 @@ const Customer = require('../models/customer')
 
 router.get('/', async (req, res) => {
     /**
-     * 
+     * /GET endpoint
+     * Gets all customer data from Database
      */
     try{
         const customers = await Customer.find()
@@ -18,7 +19,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     /**
-     * 
+     * /POST endpoint
+     * Adds a new Customer to the Database
      */
     const {email, password, name} = req.body
     

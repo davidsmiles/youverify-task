@@ -20,9 +20,10 @@ const customers = require('./routes/customers')
 app.use('/customers', customer)
 app.use('/customers', customers)
 
-// Connect To DB
+// Establish connection to Mongo Database
+mongo_uri = process.env.DATABASE_URI | 'mongodb://127.0.0.1:27017/customer-service'
 mongoose.connect(
-    process.env.DATABASE_URI, 
+    mongo_uri,  
     () => console.log('Customer-Service DB Connected')
 )
 

@@ -8,13 +8,14 @@ require('dotenv').config()
 
 const app = express()
 
-// Connect To Database
+// Establish connection to Mongo Database
+mongo_uri = process.env.DATABASE_URI | 'mongodb://127.0.0.1:27017/payment-service'
 mongoose.connect(
-    process.env.DATABASE_URI, 
+    mongo_uri,  
     () => console.log('Payment-Service DB Connected')
 )
 
-
+// Establish connection to Rabbitmq and Handle Callback
 amqp.connect('amqp://rabbitmq', (err, conn) => {
     if(err){
         throw err
@@ -26,7 +27,6 @@ amqp.connect('amqp://rabbitmq', (err, conn) => {
         }
 
         const queueName = 'PAYMENT'
-
         channel.assertQueue(queueName, {durable: false})
         
         channel.consume(queueName, async data => {
@@ -35,11 +35,19 @@ amqp.connect('amqp://rabbitmq', (err, conn) => {
             console.log('Consuming PAYMENT queue...')
             console.log(`Data received from ORDER Service ${data.content}`)
 
+            /**
+             * Publishes DATA to a Rabbitmq Messaging Queue
+             * implementation of the below statement is at `./workers/transaction.js`
+             */
             await task.publishTransaction(channel, 'TRANSACTION', JSON.stringify(payload))
     
             channel.ack(data)
         })
 
+        /**
+         * Listens for Published Data and have worker save the Transaction details to DB
+         * implementation of the below statement is at `./workers/transaction.js`
+         */
         task.saveQueuedTransaction(channel, 'TRANSACTION')
     })
 })

@@ -20,9 +20,10 @@ const products = require('./routes/products')
 app.use('/products', product)
 app.use('/products', products)
 
-// Connect To DB
+// Establish connection to Mongo Database
+mongo_uri = process.env.DATABASE_URI | 'mongodb://127.0.0.1:27017/product-service'
 mongoose.connect(
-    process.env.DATABASE_URI, 
+    mongo_uri,  
     () => console.log('Product-Service DB Connected'))
 
 const port = process.env.PORT || 3000

@@ -5,7 +5,8 @@ const Product = require('../models/product')
 
 router.get('/', async (req, res) => {
     /**
-     * 
+     * /GET endpoint
+     * Retrieves all Products
      */
     try{
         const products = await Product.find()
@@ -18,7 +19,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     /**
-     * 
+     * /POST endpoint
+     * Add a new Product
      */
     const {name, description, amount } = req.body
     const product = new Product({

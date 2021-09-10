@@ -3,6 +3,13 @@ const Payment = require('../models/payment')
 
 
 module.exports.publishTransaction = async (channel, exchangeName, data) => {
+    /**
+     * Publishes Transaction Details to a Rabbitmq Messaging Queue, as instructed
+     * 
+     * @param {Object} channel The RabbitMQ channel to use
+     * @param {Object} exchangeName The name of the Exchange to publish to
+     * @param {JSON} data The data to publish
+     */
     await channel.assertExchange(exchangeName, 'fanout', {durable: false})
     channel.publish(exchangeName, '', Buffer.from(data))
 
@@ -10,6 +17,14 @@ module.exports.publishTransaction = async (channel, exchangeName, data) => {
 }
 
 module.exports.saveQueuedTransaction = async (channel, exchangeName) => {
+    /**
+     * Consumes data previously published and most importantly..
+     * Saves the queued data in the database
+     * 
+     * @param {Object} channel The RabbitMQ channel to use
+     * @param {Object} exchangeName The name of the Exchange to publish to
+     */
+
     await channel.assertExchange(exchangeName, 'fanout', {durable: false})
 
     const q = await channel.assertQueue('', {durable: false})
