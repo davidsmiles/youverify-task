@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 
-const OrderSchema = mongoose.Schema({
+const PaymentSchema = mongoose.Schema({
     customerId: String,
     productId: String,
     amount: Number,
@@ -9,4 +9,4 @@ const OrderSchema = mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('Order', OrderSchema)
+module.exports = mongoose.model('Payment', PaymentSchema)

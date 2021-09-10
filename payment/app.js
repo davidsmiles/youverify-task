@@ -1,7 +1,7 @@
 const express = require('express')
-const amqp = require('amqplib')
+const amqp = require('amqplib/callback_api')
 const mongoose = require('mongoose')
-const Payment = require('../models/Payment')
+const Payment = require('./models/Payment')
 
 require('dotenv').config()
 
@@ -28,7 +28,7 @@ amqp.connect('amqp://rabbitmq', (err, conn) => {
 
         channel.assertQueue(queueName, {durable: false})
         
-        channel.consume('PAYMENT', async data => {
+        channel.consume(queueName, async data => {
             const {customerId, productId, orderId, amount} = JSON.parse(data.content) 
             
             console.log('Consuming PAYMENT queue')
@@ -40,7 +40,9 @@ amqp.connect('amqp://rabbitmq', (err, conn) => {
                 orderId,
                 amount
               })
-            await payment.save();
+            const newpayment = await payment.save()
+
+            console.log(newpayment)
     
             channel.ack(data)
         })
