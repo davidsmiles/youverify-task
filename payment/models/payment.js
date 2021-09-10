@@ -5,7 +5,11 @@ const PaymentSchema = mongoose.Schema({
     customerId: String,
     productId: String,
     amount: Number,
-    orderId: String
+    orderId: String,
+    timestamp: {
+        type: Date,
+        default: Date.now()
+    }
 })
 
 

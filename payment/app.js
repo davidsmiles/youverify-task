@@ -1,7 +1,8 @@
 const express = require('express')
 const amqp = require('amqplib/callback_api')
 const mongoose = require('mongoose')
-const Payment = require('./models/Payment')
+
+const task = require('./workers/transaction')
 
 require('dotenv').config()
 
@@ -18,36 +19,31 @@ amqp.connect('amqp://rabbitmq', (err, conn) => {
     if(err){
         throw err
     }
-
+    console.log('Payment Service RabbitMq Connected')
     conn.createChannel((err, channel) => {
         if(err) {
             throw err
         }
 
-        let queueName = 'PAYMENT'
+        const queueName = 'PAYMENT'
 
         channel.assertQueue(queueName, {durable: false})
         
         channel.consume(queueName, async data => {
-            const {customerId, productId, orderId, amount} = JSON.parse(data.content) 
-            
-            console.log('Consuming PAYMENT queue')
-            console.log(JSON.parse(data.content))
+            const payload = {customerId, productId, orderId, amount} = JSON.parse(data.content)
 
-            const payment = new Payment({
-                customerId,
-                productId,
-                orderId,
-                amount
-              })
-            const newpayment = await payment.save()
+            console.log('Consuming PAYMENT queue...')
+            console.log(`Data received from ORDER Service ${data.content}`)
 
-            console.log(newpayment)
+            await task.publishTransaction(channel, 'TRANSACTION', JSON.stringify(payload))
     
             channel.ack(data)
         })
+
+        task.saveQueuedTransaction(channel, 'TRANSACTION')
     })
 })
+
 
 
 const port = process.env.PORT || 3000

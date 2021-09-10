@@ -1,8 +1,8 @@
 const express = require('express')
-const task  = require('../work_queues/send')  
+const task  = require('../workers/send')  
 
 const router = express.Router()
-const Order = require('../models/Order')
+const Order = require('../models/order')
 
 
 
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
             amount,
             orderId: neworder.id
         }
-        task.sendToQueue('PAYMENT', data)
+        task.sendToQueue('PAYMENT', JSON.stringify(data))
     
         res.json(data)
     }
