@@ -1,8 +1,7 @@
-const amqp = require('amqplib')
-const Payment = require('../models/payment')
+import Payment from '../models/payment'
 
 
-module.exports.publishTransaction = async (channel, exchangeName, data) => {
+export async function publishTransaction(channel, exchangeName, data) {
     /**
      * Publishes Transaction Details to a Rabbitmq Messaging Queue, as instructed
      * 
@@ -16,7 +15,7 @@ module.exports.publishTransaction = async (channel, exchangeName, data) => {
     console.log(`Data PUBLISHED to Rabbit Messaging Queue on Exchange ${exchangeName} : ${data}`)
 }
 
-module.exports.saveQueuedTransaction = async (channel, exchangeName) => {
+export async function saveQueuedTransaction(channel, exchangeName) {
     /**
      * Consumes data previously published and most importantly..
      * Saves the queued data in the database

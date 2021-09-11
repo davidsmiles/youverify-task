@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
+import { Schema, model } from 'mongoose'
 
 
-const CustomerSchema = mongoose.Schema({
+const CustomerSchema = Schema({
     name: String,
     email: String,
     password: String,
@@ -12,4 +12,4 @@ const CustomerSchema = mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('Customers', CustomerSchema)
+export default model('Customers', CustomerSchema)

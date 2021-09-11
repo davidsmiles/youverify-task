@@ -36,7 +36,6 @@ For the ease of simplicity, only necessary endpoints covered.
     email: ugberodavid@gmail.com,
     password: 1234
 }
-/PUT /DELETE of `Customer` resource not implemented
 
 /GET /products/:id Get a specific product by id
 /GET /products Get all products
@@ -53,7 +52,6 @@ For the ease of simplicity, only necessary endpoints covered.
     productId: 8749749479ehf9,
     amount: 120,000
 }
-/PUT /DELETE /GET of `Order` resource not implemented
 ```
 
 ## Notes

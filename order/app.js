@@ -1,6 +1,7 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const logger = require('./middlewares/logger')
+import express, { json, urlencoded } from 'express'
+import { connect } from 'mongoose'
+import logger from './middlewares/logger'
+
 require('dotenv').config()
 
 const app = express()
@@ -9,18 +10,18 @@ const app = express()
 app.use(logger)
 
 // Init Body Parser
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.use(json())
+app.use(urlencoded({extended: false}))
 
 // Import Routes
-const order = require('./routes/order')
+import order from './routes/order'
 
 // Initialize Routes
 app.use('/order', order)
 
 // Establish connection to Mongo Database
 mongo_uri = process.env.DATABASE_URI        //  you can use your oww DB URI
-mongoose.connect(
+connect(
     mongo_uri, 
     () => console.log('Order-Service DB Connected')
 )

@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
+import { Schema, model } from 'mongoose'
 
 
-const ProductSchema = mongoose.Schema({
+const ProductSchema = Schema({
     name: String,
     description: String,
     amount: Number,
@@ -12,4 +12,4 @@ const ProductSchema = mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('Products', ProductSchema)
+export default model('Products', ProductSchema)

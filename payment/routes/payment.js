@@ -1,7 +1,8 @@
-const express = require('express')
+import { Router } from 'express'
+import Payment from '../models/Payment'
 
-const router = express.Router()
-const Payment = require('../models/Payment')
+const router = Router()
+
 
 
 /**
@@ -13,4 +14,4 @@ router.put('/', () => {})
 router.delete('/', () => {})
 
 
-module.exports = router
+export default router

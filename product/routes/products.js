@@ -1,6 +1,7 @@
-const express = require('express')
-const router = express.Router()
-const Product = require('../models/product')
+import { Router } from 'express'
+import Product, { find } from '../models/product'
+
+const router = Router()
 
 
 router.get('/', async (req, res) => {
@@ -9,7 +10,7 @@ router.get('/', async (req, res) => {
      * Retrieves all Products
      */
     try{
-        const products = await Product.find()
+        const products = await find()
         res.json(products)
     }
     catch(err){
@@ -50,4 +51,4 @@ router.post('/', async (req, res) => {
 router.put('/', () => {})
 router.delete('/', () => {})
 
-module.exports = router
+export default router

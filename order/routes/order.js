@@ -1,8 +1,8 @@
-const express = require('express')
-const task  = require('../workers/send')  
+import { Router } from 'express'
+import { sendToQueue } from '../workers/send'  
 
-const router = express.Router()
-const Order = require('../models/order')
+const router = Router()
+import Order from '../models/order'
 
 
 
@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
          * To keep things modularized and clean..
          * The following statement is implemented on `../workers/send.js`
          */
-        task.sendToQueue('PAYMENT', JSON.stringify(data))
+        sendToQueue('PAYMENT', JSON.stringify(data))
     
         // Return data back to the CUSTOMER that makes the /order call
         res.json(data)
@@ -58,4 +58,4 @@ router.put('/', () => {})
 router.delete('/', () => {})
 
 
-module.exports = router
+export default router
