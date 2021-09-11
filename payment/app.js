@@ -1,8 +1,8 @@
-import express from 'express'
-import { connect } from 'amqplib/callback_api'
-import { connect as _connect } from 'mongoose'
+const express = require('express')
+const amqp = require('amqplib/callback_api')
+const mongoose = require('mongoose')
 
-import { publishTransaction, saveQueuedTransaction } from './workers/transaction'
+const task = require('./workers/transaction')
 
 require('dotenv').config()
 
@@ -10,13 +10,13 @@ const app = express()
 
 // Establish connection to Mongo Database
 mongo_uri = process.env.DATABASE_URI    //  you can use your oww DB URI
-_connect(
+mongoose.connect(
     mongo_uri,  
     () => console.log('Payment-Service DB Connected')
 )
 
 // Establish connection to Rabbitmq and Handle Callback
-connect('amqp://rabbitmq', (err, conn) => {
+amqp.connect('amqp://rabbitmq', (err, conn) => {
     if(err){
         throw err
     }
@@ -39,7 +39,7 @@ connect('amqp://rabbitmq', (err, conn) => {
              * Publishes DATA to a Rabbitmq Messaging Queue
              * implementation of the below statement is at `./workers/transaction.js`
              */
-            await publishTransaction(channel, 'TRANSACTION', JSON.stringify(payload))
+            await task.publishTransaction(channel, 'TRANSACTION', JSON.stringify(payload))
     
             channel.ack(data)
         })
@@ -48,11 +48,16 @@ connect('amqp://rabbitmq', (err, conn) => {
          * Listens for Published Data and have worker save the Transaction details to DB
          * implementation of the below statement is at `./workers/transaction.js`
          */
-        saveQueuedTransaction(channel, 'TRANSACTION')
+        task.saveQueuedTransaction(channel, 'TRANSACTION')
     })
 })
 
 
+// Import Routes
+const payment = require('./routes/payment')
+
+// Initialize Routes
+app.use('/payments', payment)
 
 const port = process.env.PORT || 3000
 app.listen(

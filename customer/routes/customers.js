@@ -1,7 +1,7 @@
-import { Router } from 'express'
-import Customer, { find, findOne } from '../models/customer'
+const express = require('express')
+const Customer = require('../models/customer')
 
-const router = Router()
+const router = express.Router()
 
 
 router.get('/', async (req, res) => {
@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
      * Gets all customer data from Database
      */
     try{
-        const customers = await find()
+        const customers = await Customer.find()
         res.json(customers)
     }
     catch(err){
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
      */
     const {email, password, name} = req.body
     
-    const exists = await findOne({ email })
+    const exists = await Customer.findOne({ email })
     if (!exists){
         const newcust = new Customer({
             name,
@@ -52,4 +52,4 @@ router.post('/', async (req, res) => {
 router.put('/', () => {})
 router.delete('/', () => {})
 
-export default router
+module.exports = router

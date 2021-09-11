@@ -1,7 +1,7 @@
-import Payment from '../models/payment'
+const Payment = require('../models/payment')
 
 
-export async function publishTransaction(channel, exchangeName, data) {
+module.exports.publishTransaction = async (channel, exchangeName, data) => {
     /**
      * Publishes Transaction Details to a Rabbitmq Messaging Queue, as instructed
      * 
@@ -15,7 +15,7 @@ export async function publishTransaction(channel, exchangeName, data) {
     console.log(`Data PUBLISHED to Rabbit Messaging Queue on Exchange ${exchangeName} : ${data}`)
 }
 
-export async function saveQueuedTransaction(channel, exchangeName) {
+module.exports.saveQueuedTransaction = async (channel, exchangeName) => {
     /**
      * Consumes data previously published and most importantly..
      * Saves the queued data in the database

@@ -7,7 +7,6 @@
     "start": "node app",
     "dev": "nodemon app"
   },
-  "type": "module",
   "keywords": [
     "customer"
   ],
