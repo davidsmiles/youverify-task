@@ -1,4 +1,4 @@
-import moment from 'moment'
+const moment = require('moment')
 
 const logger = (req, res, next) => {
     /**
@@ -11,4 +11,4 @@ const logger = (req, res, next) => {
     next()
 }
 
-export default logger 
+module.exports = logger 

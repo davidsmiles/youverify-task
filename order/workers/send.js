@@ -1,12 +1,12 @@
-import { connect } from 'amqplib'
+const amqp = require('amqplib')
 
 
-export async function sendToQueue(queueName, data) {
+module.exports.sendToQueue = async (queueName, data) => {
     /**
      * @param {string} queueName The name of the Queue to forward message to
      * @param {JSON} data The data to be sent
      */
-    const connection = await connect('amqp://rabbitmq')
+    const connection = await amqp.connect('amqp://rabbitmq')
 
     console.log('Order Service RabbitMq Connected')
 

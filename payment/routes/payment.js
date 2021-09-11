@@ -1,17 +1,29 @@
-import { Router } from 'express'
-import Payment from '../models/Payment'
+const express = require('express')
+const Payment = require('../models/Payment')
 
-const router = Router()
+const router = express.Router()
 
 
+router.get('/', async (req, res) => {
+    /**
+     * /GET endpoint
+     * Retrieves all Payments
+     */
+    try{
+        const payment = await Payment.find()
+        res.json(payment)
+    }
+    catch(err){
+        res.json({message: err})
+    }
+})
 
 /**
  * TODO('Not Implemented')
  */
-router.get('/', () => {})
 router.post('/', () => {})
 router.put('/', () => {})
 router.delete('/', () => {})
 
 
-export default router
+module.exports = router

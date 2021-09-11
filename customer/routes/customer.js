@@ -1,12 +1,12 @@
-import { Router } from 'express'
-import { findById } from '../models/customer'
+const express = require('express')
+const Customer = require('../models/customer')
 
-const router = Router()
+const router = express.Router()
 
 
 router.get('/:id', async (req, res) => {
     try {
-        const customer = await findById(req.params.id)
+        const customer = await Customer.findById(req.params.id)
         res.json(customer)
     }
     catch (err){
@@ -21,4 +21,4 @@ router.put('/', () => {})
 router.delete('/', () => {})
 
 
-export default router
+module.exports = router

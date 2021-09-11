@@ -1,7 +1,7 @@
-import { Router } from 'express'
-import Product, { find } from '../models/product'
+const express = require('express')
+const Product = require('../models/product')
 
-const router = Router()
+const router = express.Router()
 
 
 router.get('/', async (req, res) => {
@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
      * Retrieves all Products
      */
     try{
-        const products = await find()
+        const products = await Product.find()
         res.json(products)
     }
     catch(err){
@@ -51,4 +51,4 @@ router.post('/', async (req, res) => {
 router.put('/', () => {})
 router.delete('/', () => {})
 
-export default router
+module.exports = router

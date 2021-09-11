@@ -1,6 +1,6 @@
-import express, { json, urlencoded } from 'express'
-import { connect } from 'mongoose'
-import logger from './middlewares/logger'
+const express = require('express')
+const mongoose = require('mongoose')
+const logger = require('./middlewares/logger')
 require('dotenv').config()
 
 const app = express()
@@ -9,12 +9,12 @@ const app = express()
 app.use(logger)
 
 // Init Body Parser
-app.use(json())
-app.use(urlencoded({extended: false}))
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 // Import Routes
-import product from './routes/product'
-import products from './routes/products'
+const product = require('./routes/product')
+const products = require('./routes/products')
 
 // Initialize Routes
 app.use('/products', product)
@@ -22,7 +22,7 @@ app.use('/products', products)
 
 // Establish connection to Mongo Database
 mongo_uri = process.env.DATABASE_URI | 'mongodb://127.0.0.1:27017/product-service'
-connect(
+mongoose.connect(
     mongo_uri,  
     () => console.log('Product-Service DB Connected'))
 
