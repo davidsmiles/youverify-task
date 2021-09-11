@@ -9,7 +9,7 @@ require('dotenv').config()
 const app = express()
 
 // Establish connection to Mongo Database
-mongo_uri = process.env.DATABASE_URI | 'mongodb://127.0.0.1:27017/payment-service'
+mongo_uri = process.env.DATABASE_URI    //  you can use your oww DB URI
 mongoose.connect(
     mongo_uri,  
     () => console.log('Payment-Service DB Connected')

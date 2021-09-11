@@ -7,7 +7,7 @@ const Order = require('../models/order')
 
 
 router.post('/', async (req, res) => {
-    
+
     /** /POST endpoint
      *  Handles the processes involving Orders of Single Products by a Customer
      */
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
         neworder = await order.save()
 
         /**
-         * Here,
+         * Here
          * `data` is prepared to be sent to the PAYMENT Service
          */
         data = {

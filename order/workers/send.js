@@ -14,5 +14,5 @@ module.exports.sendToQueue = async (queueName, data) => {
     await channel.assertQueue(queueName, {durable: false})
 
     channel.sendToQueue(queueName, Buffer.from(data), {persistent: true})
-    console.log(`Message: ${JSON.stringify(data)}`)
+    console.log(`Message: ${data}`)
 }
