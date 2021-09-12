@@ -26,22 +26,26 @@ router.post('/', async (req, res) => {
     const {email, password, name} = req.body
     
     const exists = await Customer.findOne({ email })
-    if (!exists){
-        const newcust = new Customer({
-            name,
-            email,
-            password
-        })
-        const customer = await newcust.save()
-        res.json({
-            name,
-            email,
-            id: customer.id
-        })
+    try{
+        if (!exists){
+            const newcust = new Customer({
+                name,
+                email,
+                password
+            })
+            const customer = await newcust.save()
+            res.json({
+                name,
+                email,
+                id: customer.id
+            })
+        }
+        else {
+            res.statusCode(400).json({message: 'user with email already exists'})
+        }
     }
-    else {
+    catch(err){
         res.status(400).json({message: err})
-
     }
 })
 

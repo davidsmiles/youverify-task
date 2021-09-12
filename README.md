@@ -24,6 +24,15 @@ docker-compose up --build --detach
 
 - The payment service should publish transaction details (customerId, orderId, productId, and amount) to a rabbitmq messaging queue and a worker at the end of the queue should save the queued data in the database transaction history.
 
+
+## Ports
+- Customer  /8080
+- Product   /8081
+- Order     /8082
+- Payment   /8083
+
+Didn't utilize NGINX to make it all run on PORT 80
+
 ## Endpoints available
 ```
 For the ease of simplicity, only necessary endpoints covered.
@@ -52,6 +61,8 @@ For the ease of simplicity, only necessary endpoints covered.
     productId: 8749749479ehf9,
     amount: 120,000
 }
+
+/GET /payments Retrieve all Payments data
 ```
 
 ## Notes
