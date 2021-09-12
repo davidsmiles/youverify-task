@@ -12,7 +12,7 @@ mongoose.connect(
     () => console.log('Order-Service DB Connected')
 )
 
-const port = process.env.PORT || 3002
+const port = process.env.PORT || 8082
 app.listen(
     port, () => console.log(`Server is listening on port: ${port}`)
 )

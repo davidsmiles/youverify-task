@@ -10,4 +10,4 @@ COPY . /app
 
 EXPOSE 5000
 
-CMD [ "node", "--experimental-modules", "app.js" ]
+CMD [ "npm", "start" ]

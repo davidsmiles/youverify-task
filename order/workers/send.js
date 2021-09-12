@@ -6,7 +6,8 @@ module.exports.sendToQueue = async (queueName, data) => {
      * @param {string} queueName The name of the Queue to forward message to
      * @param {JSON} data The data to be sent
      */
-    const connection = await amqp.connect('amqp://rabbitmq')
+    const uri = process.env.RABBITMQ_URI || 'amqp://localhost:5672'
+    const connection = await amqp.connect(uri)
 
     console.log('Order Service RabbitMq Connected')
 

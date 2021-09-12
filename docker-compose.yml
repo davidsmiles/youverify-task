@@ -30,6 +30,7 @@ services:
     environment: 
       - PORT=5000
       - DATABASE_URI=mongodb://mongo:27017/order-service
+      - RABBITMQ_URI=amqp://rabbitmq
   
   payment-service:
     build: ./payment
@@ -38,11 +39,13 @@ services:
     restart: always
     links: 
       - mongo
+      - rabbitmq
     depends_on: 
       - rabbitmq  
     environment: 
       - PORT=5000
       - DATABASE_URI=mongodb://mongo:27017/payment-service
+      - RABBITMQ_URI=amqp://@rabbitmq
     
   mongo:
     container_name: mongo

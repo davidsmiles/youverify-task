@@ -5,7 +5,8 @@ This is an E-Commerce microservices architecture application to enable certain s
 ## How To Run
 
 Ensure you have docker and docker-compose
-Use the [docker-compose](https://docs.docker.com/compose/install/) to run
+Use the [docker-compose](https://docs.docker.com/compose/install/) to run.
+
 
 ```bash
 docker-compose up --build --detach
@@ -63,6 +64,11 @@ For the ease of simplicity, only necessary endpoints covered.
 }
 
 /GET /payments Retrieve all Payments data
+```
+
+## Tests
+```bash
+cd {the-service-folder} && npm test
 ```
 
 ## Notes

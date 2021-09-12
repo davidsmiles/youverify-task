@@ -11,5 +11,5 @@ mongoose.connect(
     mongo_uri,  
     () => console.log('Product-Service DB Connected'))
 
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 8081
 app.listen(port, () => console.log(`Server is listening on port: ${port}`))
