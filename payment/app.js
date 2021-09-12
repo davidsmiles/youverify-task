@@ -1,6 +1,5 @@
 const express = require('express')
 const amqp = require('amqplib/callback_api')
-const mongoose = require('mongoose')
 
 const task = require('./workers/transaction')
 
@@ -8,24 +7,16 @@ require('dotenv').config()
 
 const app = express()
 
-// Establish connection to Mongo Database
-mongo_uri = process.env.DATABASE_URI    //  you can use your oww DB URI
-mongoose.connect(
-    mongo_uri,  
-    () => console.log('Payment-Service DB Connected')
-)
 
 // Establish connection to Rabbitmq and Handle Callback
-amqp.connect('amqp://rabbitmq', (err, conn) => {
+const uri = process.env.RABBITMQ_URI || "amqp://guest:guest@localhost"
+amqp.connect(uri, (err, conn) => {
     if(err){
-        throw err
+        console.log("couldnt connect to rabbitmq server, retrying..")
     }
+    
     console.log('Payment Service RabbitMq Connected')
     conn.createChannel((err, channel) => {
-        if(err) {
-            throw err
-        }
-
         const queueName = 'PAYMENT'
         channel.assertQueue(queueName, {durable: false})
         
@@ -59,8 +50,5 @@ const payment = require('./routes/payment')
 // Initialize Routes
 app.use('/payments', payment)
 
-const port = process.env.PORT || 3000
-app.listen(
-    port, () => console.log(`Server is listening on port: ${port}`)
-)
+module.exports = app
 
