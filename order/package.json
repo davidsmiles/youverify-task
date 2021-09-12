@@ -2,10 +2,18 @@
   "name": "order",
   "version": "1.0.0",
   "description": "Order Service",
-  "main": "app",
+  "main": "server",
   "scripts": {
-    "start": "node app",
-    "dev": "nodemon app"
+    "start": "node server",
+    "dev": "nodemon server",
+  
+    "test": "jest --detectOpenHandles"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "keywords": [
     "order"
@@ -20,6 +28,8 @@
     "mongoose": "^6.0.5"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "jest": "^27.1.1",
+    "nodemon": "^2.0.12",
+    "supertest": "^6.1.6"
   }
 }

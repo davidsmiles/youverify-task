@@ -19,15 +19,15 @@ describe('POST /customers', () => {
         password: "password"
     }
     
-    it("Should save user to database", async () => {
+    it("should save user to database", async () => {
         const response = await request(app).post('/customers').send(customer)
 
         expect(response.body.id).toBeTruthy()
         expect(response.body.name).toBeTruthy()
     })
 
-    it("Should have valid data", async () => {
-        const response = await request(app).post('/customers').send(customer)
+    it("should have valid data", async () => {
+        await request(app).post('/customers').send(customer)
 
         const _customer = await Customer.findOne({ email: customer.email });
         expect(_customer.name).toBe(customer.name)

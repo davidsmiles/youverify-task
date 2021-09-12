@@ -2,7 +2,7 @@
   "name": "customer",
   "version": "1.0.0",
   "description": "Customer Service",
-  "main": "app",
+  "main": "server",
   "scripts": {
     "start": "node server",
     "dev": "nodemon server",
