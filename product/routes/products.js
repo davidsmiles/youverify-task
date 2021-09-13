@@ -10,7 +10,10 @@ router.get('/', async (req, res) => {
      * Retrieves all Products
      */
     try{
-        const products = await Product.find()
+        const products = await Product
+                                .find()
+                                .select('-__v')
+                                .exec()
         res.json(products)
     }
     catch(err){

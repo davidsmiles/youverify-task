@@ -6,12 +6,13 @@ const { setupDB } = require('./test-setup')
 setupDB('endpoint-testing')
 
 
-describe('GET /payment', () => {
+describe('GET /payments', () => {
     
     /**
      * testing /GET endpoints on Payments resource
      * 
      * !! test will fail if there's a rabbitmq connection problem
+     * better to run from docker
      */
     
     it("should return a list", async () => {

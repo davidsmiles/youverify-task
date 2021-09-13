@@ -10,7 +10,10 @@ router.get('/:id', async (req, res) => {
      * Retrieve a particular Product data
      */
     try {
-        const product = await Product.findById(req.params.id)
+        const product = await Product
+                                .findById(req.params.id)
+                                .select('-__v')
+                                .exec()
         res.json(product)
     }
     catch (err){

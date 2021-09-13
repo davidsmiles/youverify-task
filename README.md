@@ -35,6 +35,7 @@ docker-compose up --build --detach
 Didn't utilize NGINX to make it all run on PORT 80
 
 ## Endpoints available
+[Postman Documentation Available HERE](https://documenter.getpostman.com/view/8673257/U16ks5Vi)
 ```
 For the ease of simplicity, only necessary endpoints covered.
 
@@ -56,7 +57,8 @@ For the ease of simplicity, only necessary endpoints covered.
     amount: 120,000
 }
 
-/POST /order Make an order - endpoint made by a customer --header Content-Type application/json
+/GET /orders Get all orders in the DB, can be filtered by customerId, productId passed as Query param
+/POST /orders Make an order - endpoint made by a customer --header Content-Type application/json
 {
     customerId: 163863894639,
     productId: 8749749479ehf9,

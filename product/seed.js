@@ -17,12 +17,12 @@ module.exports = function seed(){
     .insertMany(products)
     .then(
         function(){
-            console.log("product seed data inserted")
+            console.log("Product seed data inserted")
         }
     )
     .catch(
         function(error){
-            console.log("product seed data already inserted")
+            console.log("Product seed data already inserted")
         }
     )
 }
