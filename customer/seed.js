@@ -14,12 +14,12 @@ module.exports = function seed(){
     .insertMany(customers)
     .then(
         function(){
-            console.log("customer seed data inserted")
+            console.log("Customer seed data inserted")
         }
     )
     .catch(
         function(error){
-            console.log("customer seed data already inserted")
+            console.log("Customer seed data already inserted")
         }
     )
 }

@@ -10,7 +10,11 @@ router.get('/', async (req, res) => {
      * Gets all customer data from Database
      */
     try{
-        const customers = await Customer.find()
+        const customers = await Customer
+                                    .find()
+                                    .select('-password')
+                                    .select('-__v')
+                                    .exec()
         res.json(customers)
     }
     catch(err){

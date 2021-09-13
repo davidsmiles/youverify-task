@@ -6,7 +6,11 @@ const router = express.Router()
 
 router.get('/:id', async (req, res) => {
     try {
-        const customer = await Customer.findById(req.params.id)
+        const customer = await Customer
+                                .findById(req.params.id)
+                                .select('-password')
+                                .select('-__v')
+                                .exec()
         res.json(customer)
     }
     catch (err){
