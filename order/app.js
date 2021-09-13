@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended: false}))
 const order = require('./routes/order')
 
 // Initialize Routes
-app.use('/order', order)
+app.use('/orders', order)
 
 
 module.exports = app

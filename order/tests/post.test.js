@@ -8,7 +8,7 @@ setupDB('endpoint-testing')
 const Order = require('../models/order')
 
 
-describe('POST /order', () => {
+describe('POST /orders', () => {
     /**
      * testing /GET endpoints on Order resource
      * 
@@ -22,7 +22,7 @@ describe('POST /order', () => {
     }
     
     it("should save order to database", async () => {
-        const response = await request(app).post('/order').send(order)
+        const response = await request(app).post('/orders').send(order)
 
         expect(response.statusCode).toBe(200)
         expect(response.body.orderId).toBeTruthy()

@@ -5,6 +5,43 @@ const router = express.Router()
 const Order = require('../models/order')
 
 
+router.get('/', async (req, res) => {
+    /** /GET endpoint
+     *  Returns a list of orders
+     */
+
+     let customerId = req.query.customerId
+     let productId = req.query.productId
+
+     if(customerId){
+        try{
+            const orders = await Order
+                                    .find({ customerId })
+                                    .select('-__v')
+                                    .exec()
+            res.json(orders)
+        }
+        catch(err){
+            res.json({message: err})
+        } 
+     }
+     else if(productId){
+        try{
+            const orders = await Order
+                                    .find({ productId })
+                                    .select('-__v')
+                                    .exec()
+            res.json(orders)
+        }
+        catch(err){
+            res.json({message: err})
+        } 
+     }
+
+     const orders = await Order.find().select('-__v').exec()
+     res.json(orders)
+})
+
 
 router.post('/', async (req, res) => {
 
@@ -53,7 +90,6 @@ router.post('/', async (req, res) => {
 /**
  * TODO('Not Implemented')
  */
-router.get('/', () => {})
 router.put('/', () => {})
 router.delete('/', () => {})
 
