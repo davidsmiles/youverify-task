@@ -13,6 +13,7 @@ const uri = process.env.RABBITMQ_URI || "amqp://guest:guest@localhost"
 amqp.connect(uri, (err, conn) => {
     if(err){
         console.log("couldnt connect to rabbitmq server, retrying..")
+        process.exit(0)
     }
     
     console.log('Payment Service RabbitMq Connected')

@@ -16,4 +16,6 @@ module.exports.sendToQueue = async (queueName, data) => {
 
     channel.sendToQueue(queueName, Buffer.from(data), {persistent: true})
     console.log(`Message: ${data}`)
+
+    connection.close()
 }

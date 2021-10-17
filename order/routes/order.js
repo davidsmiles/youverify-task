@@ -69,7 +69,8 @@ router.post('/', async (req, res) => {
             customerId,
             productId,
             amount,
-            orderId: neworder.id
+            orderId: neworder.id,
+            status: neworder.orderStatus
         }
 
         /**
