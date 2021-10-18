@@ -4,5 +4,7 @@ stages:
 Test:
   image: docker:latest
   stage: test
+  tags:
+    - deployment
   script:
     - echo "Passed!"
