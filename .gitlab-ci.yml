@@ -17,7 +17,7 @@ Test:
     - echo "Tests passed!"
 
 Deploy:
-  stage: test
+  stage: deploy
   script:
     - sudo apt-get install -y python-pip
     - pip install docker-compose
