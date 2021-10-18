@@ -9,6 +9,8 @@ variables:
 Test:
   stage: test
   image: docker/compose
+  services:
+    - docker:dind
   script:
     - docker-compose build
 
