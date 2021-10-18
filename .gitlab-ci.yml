@@ -1,8 +1,3 @@
-image: docker
-
-services:
-  - docker:dind
-
 stages:
   - test
   - deploy
@@ -13,15 +8,27 @@ variables:
 
 Test:
   stage: test
+  services:
+  - docker:dind
   script:
-    - echo "Tests passed!"
+    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push $TAG_COMMIT
+    - docker push $TAG_LATEST
 
-Deploy:
+deploy:
+  image: alpine:latest
   stage: deploy
+  tags:
+    - deployment
   script:
-    - sudo apt-get install -y python-pip
-    - pip install docker-compose
-    - docker-compose up -d --build
+    - chmod og= $ID_RSA
+    - apk update && apk add openssh-client docker-compose
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $TAG_COMMIT"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-app || true"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 80:80 --name my-app $TAG_COMMIT"
+
   environment: 
     name: production
     url: http://34.132.72.31
