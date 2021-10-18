@@ -1,16 +1,27 @@
+images: docker
+
+services:
+  - docker: dind
+
 stages:
   - test
+  - deploy
 
 variables:
   TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
   TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
 
-test_customer_service:
-  image: docker:latest
+Test:
   stage: test
   script:
-    - cd customer && docker build -t $TAG_COMMIT -t $TAG_LATEST .
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push $TAG_COMMIT
-    - docker push $TAG_LATEST
-    - echo "Test Passed for new Runner!"
+    - echo "Tests passed!"
+
+Deploy:
+  stage: test
+  script:
+    - sudo apt-get install -y python-pip
+    - pip install docker-compose
+    - docker-compose up -d --build
+  environment: 
+    - name: production
+      url: http://34.132.72.31
