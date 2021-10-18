@@ -1,5 +1,3 @@
-image: alpine:latest
-  
 stages:
   - test
   - deploy
@@ -10,14 +8,11 @@ variables:
 
 Test:
   stage: test
+  image: docker/compose
   services:
   - docker:dind
   script:
-    - apk update && apk add openssh-client docker-compose
     - docker-compose build
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push $TAG_COMMIT
-    - docker push $TAG_LATEST
 
 deploy:
   image: alpine:latest
